@@ -1,10 +1,10 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
 
-import en from './en/index'
-import ua from './ua/index'
-import nl from './nl/index'
 import de from './de/index'
+import en from './en/index'
+import nl from './nl/index'
+import ua from './ua/index'
 
 const resources = {
   en,

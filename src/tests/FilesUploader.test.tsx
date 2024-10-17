@@ -62,12 +62,12 @@ describe('FilesUploader', () => {
     expect(consoleLogSpy).toHaveBeenCalledWith('hello.txt')
   })
 
-  it('should call indices callback when loading indices file', () => {
+  it('should call faces callback when loading faces file', () => {
     render(<FilesUploader defaultOpen />)
     const consoleLogSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
-    const indicesDnd = screen.getByText('filesUploader.indicesFile')
+    const facesDnd = screen.getByText('filesUploader.facesFile')
 
-    fireEvent.drop(indicesDnd, {
+    fireEvent.drop(facesDnd, {
       dataTransfer: {
         files: [mockTextFile]
       }
@@ -76,7 +76,7 @@ describe('FilesUploader', () => {
     expect(consoleLogSpy).toHaveBeenCalledWith('hello.txt')
   })
 
-  it('should call indices callback when loading indices file', () => {
+  it('should call faces callback when loading faces file', () => {
     render(<FilesUploader defaultOpen />)
     const consoleLogSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
     const button = screen.getByText('filesUploader.createModelButton')

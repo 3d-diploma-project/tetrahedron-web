@@ -1,5 +1,5 @@
+import Scene from '@/components/Scene'
 import { Canvas } from '@react-three/fiber'
-import StandartCube from './StandartCube'
 
 const Experience = () => {
   return (
@@ -8,10 +8,10 @@ const Experience = () => {
         fov: 45,
         near: 0.1,
         far: 10000,
-        position: [-4, 3, 6]
+        position: [3, 3, 3]
       }}
     >
-      <StandartCube />
+      <Scene />
     </Canvas>
   )
 }

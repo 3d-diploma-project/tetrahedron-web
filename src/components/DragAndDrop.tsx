@@ -1,21 +1,19 @@
 import { ChangeEvent, DragEvent, MouseEvent, useRef, useState } from 'react'
 
-import { useTranslation } from 'react-i18next'
-
+import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { FiPlus } from 'react-icons/fi'
-import { Button } from '@/components/ui/button'
 import { IoCloudUploadOutline } from 'react-icons/io5'
 
 interface DragAndDropProps {
   onFilesLoad: (files: File[]) => void
+  hint: string
   title?: string
   className?: string
   accept?: string
 }
 
-const DragAndDrop = ({ onFilesLoad, accept, title = '', className = '' }: DragAndDropProps) => {
-  const { t } = useTranslation()
+const DragAndDrop = ({ onFilesLoad, accept, hint, title = '', className = '' }: DragAndDropProps) => {
   const [drag, setDrag] = useState(false)
   const fileInput = useRef<HTMLInputElement>(null)
 
@@ -77,7 +75,7 @@ const DragAndDrop = ({ onFilesLoad, accept, title = '', className = '' }: DragAn
       <p className="text-center text-base font-semibold">{title}</p>
       <div className="flex flex-col items-center justify-center gap-2 font-semibold">
         <IoCloudUploadOutline className="text-2xl" />
-        <p className="text-center">{t('dragAndDrop.hint')}</p>
+        <p className="text-center">{hint}</p>
         <Button onClick={onBrowseButtonClick} size={'icon'}>
           <FiPlus className="text-2xl" />
         </Button>

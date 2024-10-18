@@ -1,6 +1,6 @@
-import { describe, expect, it, vi } from 'vitest'
-import { fireEvent, render, screen } from '@testing-library/react'
 import OutsideClickHandler from '@/components/OutsideClickHandler'
+import { fireEvent, render, screen } from '@testing-library/react'
+import { describe, expect, it, vi } from 'vitest'
 
 const callbackMock = vi.fn()
 

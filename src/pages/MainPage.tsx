@@ -5,12 +5,14 @@ import figure2 from '@/assets/figure2.png'
 import figure3 from '@/assets/figure3.png'
 import Section from '@/components/Section'
 import { Button } from '@/components/ui/button'
+import { useAppDispatch } from '@/hooks/use-redux'
+import { resetModel } from '@/redux/slices/modelSlice'
 import { useNavigate } from 'react-router-dom'
 
 const MainPage = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
-
+  const dispatch = useAppDispatch()
   const sections = [...Array(3)].map((_, index) => (
     <Section
       key={t(`mainPage.section${index + 1}.number`)}
@@ -21,6 +23,7 @@ const MainPage = () => {
   ))
 
   const onCreateModelButtonClick = () => {
+    dispatch(resetModel())
     navigate('/model')
   }
 
@@ -34,7 +37,7 @@ const MainPage = () => {
         <h3 className="mx-auto w-[85%] text-center text-lg">{t('mainPage.subHeader')}</h3>
       </div>
 
-      <Button data-testid="createModelButton" onClick={onCreateModelButtonClick} className="mt-10 rounded-3xl">
+      <Button data-testid="createModelButton" onClick={onCreateModelButtonClick} className="mt-10 rounded-3xl px-5">
         {t('mainPage.createModelButton')}
       </Button>
 

@@ -2,9 +2,12 @@ import { useState } from 'react'
 
 import { useTranslation } from 'react-i18next'
 
-import { Button } from './ui/button'
-import DragAndDrop from './DragAndDrop'
-import OutsideClickHandler from './OutsideClickHandler'
+import DragAndDrop from '@/components/DragAndDrop'
+import OutsideClickHandler from '@/components/OutsideClickHandler'
+import { Button } from '@/components/ui/button'
+import { useAppDispatch, useAppSelector } from '@/hooks/use-redux'
+import { parseFaces, parseVertices } from '@/lib/parser'
+import { setFaces, setVertices } from '@/redux/slices/modelSlice'
 
 interface FilesUploaderProps {
   defaultOpen?: boolean
@@ -13,6 +16,11 @@ interface FilesUploaderProps {
 const FilesUploader = ({ defaultOpen = false }: FilesUploaderProps) => {
   const { t } = useTranslation()
   const [open, setOpen] = useState(defaultOpen)
+  const dispatch = useAppDispatch()
+  const { isEmpty, facesFileName, verticesFileName } = useAppSelector((store) => store.model)
+
+  const verticesHint = verticesFileName === '' ? t('filesUploader.hint') : verticesFileName
+  const facesHint = facesFileName === '' ? t('filesUploader.hint') : facesFileName
 
   const onLoadFilesClick = () => {
     setOpen(true)
@@ -22,16 +30,36 @@ const FilesUploader = ({ defaultOpen = false }: FilesUploaderProps) => {
     setOpen(false)
   }
 
-  const onIndicesLoad = (files: File[]) => {
-    console.log(files[0].name)
+  const onFacesLoad = async (files: File[]) => {
+    const file = files[0]
+    const input = await file.text()
+    const faces = parseFaces(input)
+    console.log(faces)
+
+    dispatch(
+      setFaces({
+        faces,
+        fileName: file.name
+      })
+    )
   }
 
-  const onVerticesLoad = (files: File[]) => {
-    console.log(files[0].name)
+  const onVerticesLoad = async (files: File[]) => {
+    const file = files[0]
+    const input = await file.text()
+    const vertices = parseVertices(input)
+    console.log(vertices)
+
+    dispatch(
+      setVertices({
+        vertices,
+        fileName: file.name
+      })
+    )
   }
 
   const onCreateModelClick = () => {
-    console.log('onCreateModelClick')
+    setOpen(false)
   }
 
   if (!open) return <Button onClick={onLoadFilesClick}>{t('filesUploader.loadFilesButton')}</Button>
@@ -45,18 +73,22 @@ const FilesUploader = ({ defaultOpen = false }: FilesUploaderProps) => {
         <div className="grid aspect-video max-w-7xl grid-rows-[1fr,auto] gap-5 rounded-3xl bg-white p-5 md:gap-10 md:p-10">
           <div className="flex flex-col items-center justify-center gap-5 md:flex-row md:gap-10">
             <DragAndDrop
+              hint={verticesHint}
               onFilesLoad={onVerticesLoad}
               title={t('filesUploader.verticesFile')}
               className="w-full max-w-80 p-5 md:aspect-square"
             />
             <DragAndDrop
-              onFilesLoad={onIndicesLoad}
-              title={t('filesUploader.indicesFile')}
+              hint={facesHint}
+              onFilesLoad={onFacesLoad}
+              title={t('filesUploader.facesFile')}
               className="w-full max-w-80 p-5 md:aspect-square"
             />
           </div>
           <div className="flex items-center justify-end">
-            <Button onClick={onCreateModelClick}>{t('filesUploader.createModelButton')}</Button>
+            <Button disabled={isEmpty} onClick={onCreateModelClick}>
+              {t('filesUploader.createModelButton')}
+            </Button>
           </div>
         </div>
       </OutsideClickHandler>

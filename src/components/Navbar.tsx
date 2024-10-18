@@ -1,8 +1,8 @@
-import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
 
-import Logo from './ui/Logo'
 import { LanguageSelector } from './LanguageSelector'
+import Logo from './ui/Logo'
 
 const Navbar = () => {
   const { t } = useTranslation()

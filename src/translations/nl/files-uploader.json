@@ -2,5 +2,6 @@
   "loadFilesButton": "Bestanden laden",
   "createModelButton": "Model creëren",
   "verticesFile": "Vertex-bestand",
-  "indicesFile": "Index-bestand"
+  "facesFile": "Index-bestand",
+  "hint": "Blader door en kies de bestanden die je vanaf je computer wilt uploaden"
 }
